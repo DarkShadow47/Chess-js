@@ -90,3 +90,60 @@ div *
     background: rgba(128, 128, 128,0.8);
 }
 
+.green
+{
+    background: rgb(65, 161, 73) !important;
+}
+
+.neonblue_txt
+{
+    animation: neonbluetxt 1.5s ease-in-out infinite alternate ; 
+}
+
+.neonorange_txt
+{
+    animation: neonbluetxt 1.5s ease-in-out infinite alternate ; 
+}
+
+.neongreen_txt
+{
+    animation: neonbluetxt 1.5s ease-in-out infinite alternate ; 
+}
+
+@keyframes neonbluetxt {
+    form
+    {
+        text-shadow:0 0 10px #fff,0 0 20px #fff,0 0 30px #fff,0 0 40px #228dff,0 0 70px #228dff,0 0 80px #228dff,0 0 100px #228dff,0 0 150px #228dff;
+    }
+    to
+    {
+        text-shadow:0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228dff,0 0 35px #228dff,0 0 40px #228dff,0 0 50px #228dff,0 0 75px #228dff ;
+    }
+    
+}
+
+@keyframes neonorangetxt {
+    form
+    {
+        text-shadow:0 0 10px #fff,0 0 20px #fff,0 0 30px #fff,0 0 40px #ff9900,0 0 70px #ff9900,0 0 80px #ff9900,0 0 100px #ff9900,0 0 150px #ff9900;
+    }
+    to
+    {
+        text-shadow:0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #ff9900,0 0 35px #ff9900,0 0 40px #ff9900,0 0 50px #ff9900,0 0 75px #ff9900 ;
+    }
+    
+}
+
+@keyframes neongreentxt {
+    form
+    {
+        text-shadow:0 0 10px #fff,0 0 20px #fff,0 0 30px #fff,0 0 40px #b6ff00,0 0 70px #b6ff00,0 0 80px #b6ff00,0 0 100px #b6ff00,0 0 150px #b6ff00;
+    }
+    to
+    {
+        text-shadow:0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #b6ff00,0 0 35px #b6ff00,0 0 40px #b6ff00,0 0 50px #b6ff00,0 0 75px #b6ff00 ;
+    }
+    
+}
+
+
