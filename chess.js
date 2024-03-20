@@ -651,26 +651,23 @@ let main = {
       },
   
       move: function (target) {
-  
         let selectedpiece = $('#' + main.variables.selectedpiece).attr('chess');
-  
-        // new cell
-        $('#' + target.id).html(main.variables.pieces[selectedpiece].img);
-        $('#' + target.id).attr('chess',selectedpiece);
-        // old cell
-        $('#' + main.variables.selectedpiece).html('');
-        $('#' + main.variables.selectedpiece).attr('chess','null');
-        main.variables.pieces[selectedpiece].position = target.id;
-        main.variables.pieces[selectedpiece].moved = true;
-  
-        /*
-        // toggle highlighted coordinates
-        main.methods.togglehighlight(main.variables.highlighted);
-        main.variables.highlighted.length = 0;
-        // set the selected piece to '' again
-        main.variables.selectedpiece = '';
-        */
-      },
+      
+        // Check if target is a valid move option
+        if (main.variables.highlighted.some(function(option) {
+          return option.id === target.id;
+        })) {
+          // Update target cell and game state (existing code)
+          $('#' + target.id).html(main.variables.pieces[selectedpiece].img);
+          $('#' + target.id).attr('chess', selectedpiece);
+          $('#' + main.variables.selectedpiece).html('');
+          $('#' + main.variables.selectedpiece).attr('chess', 'null');
+          main.variables.pieces[selectedpiece].position = target.id;
+          main.variables.pieces[selectedpiece].moved = true;
+        } else {
+          // Handle invalid move (optional)
+          console.log("Invalid move! Please select a valid target square.");
+        }},
   
       endturn: function(){
   
