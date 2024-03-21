@@ -249,6 +249,8 @@ let main = {
         let position = { x: '', y: '' };
         position.x = main.variables.pieces[selectedpiece].position.split('_')[0];
         position.y = main.variables.pieces[selectedpiece].position.split('_')[1];
+        console.log(position)
+        console.log("I'm Here!")
   
         // these options need to be var instead of let
         var options = []; 
@@ -373,6 +375,8 @@ let main = {
             options = (main.methods.options(startpoint, coordinates, main.variables.pieces[selectedpiece].type)).slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+            console.log("I'm Here Knight!")
+            return coordinates;
   
             break;
           case 'b_knight':
@@ -654,27 +658,27 @@ let main = {
 
         let selectedpiece = $('#' + main.variables.selectedpiece).attr('chess');
         let position = { x: '', y: '' };
+
         position.x = main.variables.pieces[selectedpiece].position.split('_')[0];
         position.y = main.variables.pieces[selectedpiece].position.split('_')[1];
-        console.log(selectedpiece);
-        console.log(position);
-        console.log(position.x);
-        console.log(position.y);
-        let coordinates = main.methods.options(position, this.moveoptions(selectedpiece), selectedpiece.type);
-        console.log(coordinates);
-        /*
-        // Check if coordinates is an array (handle potential errors)
-        if (!Array.isArray(coordinates)) {
-          console.error("Error: coordinates is not an array");
-          return; // Or handle the error differently based on your application's logic
-        }
+
+        let type =main.variables.pieces[selectedpiece].type;
+        let coords = main.methods.moveoptions(selectedpiece);
+        console.log(coords)
+
+        let cs = main.methods.options(position,coords,type);
+
+        
+
+        
         
         // Separate target coordinates (assuming target is a string in "X_Y" format)
         let targetX, targetY;
-        [targetX, targetY] = target.split('_').map(Number); // Convert to numbers
+        [targetX, targetY] = target.id.split('_').map(Number); // Convert to numbers
+        console.log(targetX,targetY)
         
         // Find the matching coordinate in the array using find()
-        let matchingCoordinate = coordinates.find(coord => {
+        let matchingCoordinate = cs.find(coord => {
           const [coordX, coordY] = coord.split('_').map(Number);
           console.log(coordX);
           return targetX === coordX && targetY === coordY;
@@ -697,7 +701,7 @@ let main = {
           // Target is not a valid move
           console.log("Target is not a valid move.");
           // Handle invalid move scenario here (e.g., display error message)
-        }*/
+        }
 
 
          },
