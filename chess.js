@@ -910,7 +910,7 @@ let main = {
     
             main.methods.endturn();
             
-          } else { // move selectedpiece
+          } else if (main.methods.checkvalid(target) == true) { // move selectedpiece
             main.methods.move(target);
             main.methods.endturn();
           }
