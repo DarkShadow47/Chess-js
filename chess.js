@@ -651,23 +651,56 @@ let main = {
       },
   
       move: function (target) {
+
         let selectedpiece = $('#' + main.variables.selectedpiece).attr('chess');
-      
-        // Check if target is a valid move option
-        if (main.variables.highlighted.some(function(option) {
-          return option.id === target.id;
-        })) {
-          // Update target cell and game state (existing code)
-          $('#' + target.id).html(main.variables.pieces[selectedpiece].img);
-          $('#' + target.id).attr('chess', selectedpiece);
-          $('#' + main.variables.selectedpiece).html('');
-          $('#' + main.variables.selectedpiece).attr('chess', 'null');
-          main.variables.pieces[selectedpiece].position = target.id;
-          main.variables.pieces[selectedpiece].moved = true;
+        let position = { x: '', y: '' };
+        position.x = main.variables.pieces[selectedpiece].position.split('_')[0];
+        position.y = main.variables.pieces[selectedpiece].position.split('_')[1];
+        console.log(selectedpiece);
+        console.log(position);
+        console.log(position.x);
+        console.log(position.y);
+        let coordinates = main.methods.options(position, this.moveoptions(selectedpiece), selectedpiece.type);
+        console.log(coordinates);
+        /*
+        // Check if coordinates is an array (handle potential errors)
+        if (!Array.isArray(coordinates)) {
+          console.error("Error: coordinates is not an array");
+          return; // Or handle the error differently based on your application's logic
+        }
+        
+        // Separate target coordinates (assuming target is a string in "X_Y" format)
+        let targetX, targetY;
+        [targetX, targetY] = target.split('_').map(Number); // Convert to numbers
+        
+        // Find the matching coordinate in the array using find()
+        let matchingCoordinate = coordinates.find(coord => {
+          const [coordX, coordY] = coord.split('_').map(Number);
+          console.log(coordX);
+          return targetX === coordX && targetY === coordY;
+        });
+        
+        // Check if a matching coordinate is found
+        if (matchingCoordinate) {
+          // Target is a valid move based on the options function
+          console.log("Target is a valid move!");
+          // new cell
+        $('#' + target.id).html(main.variables.pieces[selectedpiece].img);
+        $('#' + target.id).attr('chess',selectedpiece);
+        // old cell
+        $('#' + main.variables.selectedpiece).html('');
+        $('#' + main.variables.selectedpiece).attr('chess','null');
+        main.variables.pieces[selectedpiece].position = target.id;
+        main.variables.pieces[selectedpiece].moved = true;
+          // Perform actions for a valid move here (e.g., update board state, highlight target)
         } else {
-          // Handle invalid move (optional)
-          console.log("Invalid move! Please select a valid target square.");
-        }},
+          // Target is not a valid move
+          console.log("Target is not a valid move.");
+          // Handle invalid move scenario here (e.g., display error message)
+        }*/
+
+
+         },
   
       endturn: function(){
   
