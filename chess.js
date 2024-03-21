@@ -701,10 +701,6 @@ let main = {
 
         let cs = main.methods.options(pos,coords,type);
 
-        
-
-        
-        
         // Separate target coordinates (assuming target is a string in "X_Y" format)
         let targetX, targetY;
         [targetX, targetY] = target.id.split('_').map(Number); // Convert to numbers
@@ -729,14 +725,56 @@ let main = {
         $('#' + main.variables.selectedpiece).attr('chess','null');
         main.variables.pieces[selectedpiece].position = target.id;
         main.variables.pieces[selectedpiece].moved = true;
+       
+        
           // Perform actions for a valid move here (e.g., update board state, highlight target)
         } else {
           // Target is not a valid move
           console.log("Target is not a valid move.");
+          
           // Handle invalid move scenario here (e.g., display error message)
         }
 
 
+         },
+
+         checkvalid : function(target)
+         {
+        let selectedpiece = $('#' + main.variables.selectedpiece).attr('chess');
+        let position = { x: '', y: '' };
+
+        position.x = main.variables.pieces[selectedpiece].position.split('_')[0];
+        position.y = main.variables.pieces[selectedpiece].position.split('_')[1];
+
+        console.log(selectedpiece)
+        pos=position.x + "_" + position.y
+
+
+        let type =main.variables.pieces[selectedpiece].type;
+
+        var coords = main.methods.moveoptions(selectedpiece);
+
+        let cs = main.methods.options(pos,coords,type);
+
+ 
+        let targetX, targetY;
+        [targetX, targetY] = target.id.split('_').map(Number); 
+
+        
+
+        let matchingCoordinate = cs.find(coord => {
+          const [coordX, coordY] = coord.split('_').map(Number);
+          console.log(coordX,coordY);
+          return targetX === coordX && targetY === coordY;
+        });
+        
+        if (matchingCoordinate) 
+        {
+        return true
+        } else 
+        {
+         return false
+        }
          },
   
       endturn: function(){
@@ -877,10 +915,12 @@ let main = {
             main.methods.endturn();
           }
     
-        } else { // else if selecedpiece.name is not white/black king than move
-  
+        } else if (main.methods.checkvalid(target) == true) { // else if selecedpiece.name is not white/black king than move
+          
+          
           main.methods.move(target);
           main.methods.endturn();
+
   
         }
           
