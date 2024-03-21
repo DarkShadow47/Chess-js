@@ -814,9 +814,9 @@ let main = {
       kingindanger: function(selectedpiece)
       {
         console.log(main.variables.highlighted)
-        
-        let types =main.variables.pieces[selectedpiece].type;
-        let filterking = main.variables.highlighted.filter(val => {
+        console.log(selectedpiece) 
+        let type  = $('#' + main.variables.selectedpiece.name).attr('chess');
+        console.log(type)       /*let filterking = main.variables.highlighted.filter(val => {
           let pos = { x: 0, y: 0 };
           pos.x = parseInt(val.split('_')[0]);
           pos.y = parseInt(val.split('_')[1]);
@@ -888,7 +888,7 @@ let main = {
           }    
 
 
-        })
+        })*/
       },
   
       togglehighlight: function(options) {
