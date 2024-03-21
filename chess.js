@@ -431,14 +431,14 @@ let main = {
             if (main.variables.pieces[selectedpiece].moved == false) {
   
               coordinates = [{ x: 0, y: 1 },{ x: 0, y: 2 },{ x: 1, y: 1 },{ x: -1, y: 1 }].map(function(val){
-                return (parseInt(position.x) + parseInt(val.x)) + '_' + (parseInt(position.y) + parseInt(val.y)),coordinates;
+                return (parseInt(position.x) + parseInt(val.x)) + '_' + (parseInt(position.y) + parseInt(val.y));
               });
   
             }
             else if (main.variables.pieces[selectedpiece].moved == true) {
   
               coordinates = [{ x: 0, y: 1 },{ x: 1, y: 1 },{ x: -1, y: 1 }].map(function(val){
-                return (parseInt(position.x) + parseInt(val.x)) + '_' + (parseInt(position.y) + parseInt(val.y)),coordinates;
+                return (parseInt(position.x) + parseInt(val.x)) + '_' + (parseInt(position.y) + parseInt(val.y));
               });
   
             }
@@ -446,6 +446,7 @@ let main = {
             options = (main.methods.options(startpoint, coordinates, main.variables.pieces[selectedpiece].type)).slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+            return coordinates;
             
   
             break;
@@ -492,6 +493,9 @@ let main = {
             return val;
           }
         });
+
+        console.log(startpoint);
+        console.log("Here")
         
         
         
@@ -682,19 +686,20 @@ let main = {
         position.x = main.variables.pieces[selectedpiece].position.split('_')[0];
         position.y = main.variables.pieces[selectedpiece].position.split('_')[1];
 
-        let type =main.variables.pieces[selectedpiece].type;
-        if (type == "w_pawn" || type == "b_pawn")
-        {
-          var sa5ta,coords =  main.methods.moveoptions(selectedpiece);
+        console.log(selectedpiece)
+        pos=position.x + "_" + position.y
+        console.log(pos)
 
-        }else
-        {
-          var coords = main.methods.moveoptions(selectedpiece);
-        }
+        let type =main.variables.pieces[selectedpiece].type;
+        
+
+        var coords = main.methods.moveoptions(selectedpiece);
+
+        
         console.log("this coord")
         console.log(coords)
 
-        let cs = main.methods.options(position,coords,type);
+        let cs = main.methods.options(pos,coords,type);
 
         
 
@@ -708,7 +713,7 @@ let main = {
         // Find the matching coordinate in the array using find()
         let matchingCoordinate = cs.find(coord => {
           const [coordX, coordY] = coord.split('_').map(Number);
-          console.log(coordX);
+          console.log(coordX,coordY);
           return targetX === coordX && targetY === coordY;
         });
         
