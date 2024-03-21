@@ -249,8 +249,7 @@ let main = {
         let position = { x: '', y: '' };
         position.x = main.variables.pieces[selectedpiece].position.split('_')[0];
         position.y = main.variables.pieces[selectedpiece].position.split('_')[1];
-        console.log(position)
-        console.log("I'm Here!")
+
   
         // these options need to be var instead of let
         var options = []; 
@@ -278,6 +277,7 @@ let main = {
             options = (main.methods.options(startpoint, coordinates, main.variables.pieces[selectedpiece].type)).slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+            return coordinates;
   
             break;
           case 'b_king':
@@ -299,6 +299,7 @@ let main = {
             options = (main.methods.options(startpoint, coordinates, main.variables.pieces[selectedpiece].type)).slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+            return coordinates;
   
             break;
           case 'w_queen':
@@ -317,6 +318,7 @@ let main = {
             options = coordinates.slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+            return coordinates;
   
             break;
           case 'b_queen':
@@ -335,6 +337,7 @@ let main = {
               options = coordinates.slice(0);
               main.variables.highlighted = options.slice(0);
               main.methods.togglehighlight(options);
+              return coordinates;
     
               break;
           
@@ -350,6 +353,7 @@ let main = {
             options = coordinates.slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+            return coordinates;
   
             break;
           
@@ -365,6 +369,7 @@ let main = {
             options = coordinates.slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+            return coordinates;
             break;
           case 'w_knight':
   
@@ -375,7 +380,7 @@ let main = {
             options = (main.methods.options(startpoint, coordinates, main.variables.pieces[selectedpiece].type)).slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
-            console.log("I'm Here Knight!")
+
             return coordinates;
   
             break;
@@ -388,6 +393,7 @@ let main = {
             options = (main.methods.options(startpoint, coordinates, main.variables.pieces[selectedpiece].type)).slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+            return coordinates;
   
             break;
           case 'w_rook':
@@ -402,6 +408,7 @@ let main = {
             options = coordinates.slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+            return coordinates;
             
             break;
           case 'b_rook':
@@ -416,6 +423,7 @@ let main = {
             options = coordinates.slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+            return coordinates;
             
             break;
           case 'w_pawn':
@@ -423,14 +431,14 @@ let main = {
             if (main.variables.pieces[selectedpiece].moved == false) {
   
               coordinates = [{ x: 0, y: 1 },{ x: 0, y: 2 },{ x: 1, y: 1 },{ x: -1, y: 1 }].map(function(val){
-                return (parseInt(position.x) + parseInt(val.x)) + '_' + (parseInt(position.y) + parseInt(val.y));
+                return (parseInt(position.x) + parseInt(val.x)) + '_' + (parseInt(position.y) + parseInt(val.y)),coordinates;
               });
   
             }
             else if (main.variables.pieces[selectedpiece].moved == true) {
   
               coordinates = [{ x: 0, y: 1 },{ x: 1, y: 1 },{ x: -1, y: 1 }].map(function(val){
-                return (parseInt(position.x) + parseInt(val.x)) + '_' + (parseInt(position.y) + parseInt(val.y));
+                return (parseInt(position.x) + parseInt(val.x)) + '_' + (parseInt(position.y) + parseInt(val.y)),coordinates;
               });
   
             }
@@ -438,6 +446,7 @@ let main = {
             options = (main.methods.options(startpoint, coordinates, main.variables.pieces[selectedpiece].type)).slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+            
   
             break;
   
@@ -462,13 +471,17 @@ let main = {
             options = (main.methods.options(startpoint, coordinates, main.variables.pieces[selectedpiece].type)).slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+            return coordinates;
   
             break;
   
         }
       },
   
-      options: function(startpoint, coordinates, piecetype) { // first check if any of the possible coordinates is out of bounds;
+      options: function(startpoint, coordinates, piecetype) {
+         // first check if any of the possible coordinates is out of bounds;
+
+
           
         coordinates = coordinates.filter(val => {
           let pos = { x: 0, y: 0 };
@@ -479,6 +492,9 @@ let main = {
             return val;
           }
         });
+        
+        
+        
   
         switch (piecetype) {
   
@@ -517,6 +533,10 @@ let main = {
               coordinates = coordinates.filter(val => {
                 let sp = { x: 0, y: 0 };
                 let coordinate = val.split('_');
+
+                
+                console.log(startpoint); // Check the value of startpoint
+
   
                 sp.x = startpoint.split('_')[0];
                 sp.y = startpoint.split('_')[1];
@@ -663,7 +683,15 @@ let main = {
         position.y = main.variables.pieces[selectedpiece].position.split('_')[1];
 
         let type =main.variables.pieces[selectedpiece].type;
-        let coords = main.methods.moveoptions(selectedpiece);
+        if (type == "w_pawn" || type == "b_pawn")
+        {
+          var sa5ta,coords =  main.methods.moveoptions(selectedpiece);
+
+        }else
+        {
+          var coords = main.methods.moveoptions(selectedpiece);
+        }
+        console.log("this coord")
         console.log(coords)
 
         let cs = main.methods.options(position,coords,type);
