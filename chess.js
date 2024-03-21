@@ -494,8 +494,6 @@ let main = {
           }
         });
 
-        console.log(startpoint);
-        console.log("Here")
         
         
         
@@ -539,7 +537,7 @@ let main = {
                 let coordinate = val.split('_');
 
                 
-                console.log(startpoint); // Check the value of startpoint
+               
 
   
                 sp.x = startpoint.split('_')[0];
@@ -686,9 +684,9 @@ let main = {
         position.x = main.variables.pieces[selectedpiece].position.split('_')[0];
         position.y = main.variables.pieces[selectedpiece].position.split('_')[1];
 
-        console.log(selectedpiece)
+
         pos=position.x + "_" + position.y
-        console.log(pos)
+  
 
         let type =main.variables.pieces[selectedpiece].type;
         
@@ -696,20 +694,19 @@ let main = {
         var coords = main.methods.moveoptions(selectedpiece);
 
         
-        console.log("this coord")
-        console.log(coords)
+
 
         let cs = main.methods.options(pos,coords,type);
 
         // Separate target coordinates (assuming target is a string in "X_Y" format)
         let targetX, targetY;
         [targetX, targetY] = target.id.split('_').map(Number); // Convert to numbers
-        console.log(targetX,targetY)
+        
         
         // Find the matching coordinate in the array using find()
         let matchingCoordinate = cs.find(coord => {
           const [coordX, coordY] = coord.split('_').map(Number);
-          console.log(coordX,coordY);
+          
           return targetX === coordX && targetY === coordY;
         });
         
@@ -764,7 +761,6 @@ let main = {
 
         let matchingCoordinate = cs.find(coord => {
           const [coordX, coordY] = coord.split('_').map(Number);
-          console.log(coordX,coordY);
           return targetX === coordX && targetY === coordY;
         });
         
@@ -813,6 +809,86 @@ let main = {
   
         }
   
+      },
+
+      kingindanger: function(selectedpiece)
+      {
+        console.log(main.variables.highlighted)
+        
+        let types =main.variables.pieces[selectedpiece].type;
+        let filterking = main.variables.highlighted.filter(val => {
+          let pos = { x: 0, y: 0 };
+          pos.x = parseInt(val.split('_')[0]);
+          pos.y = parseInt(val.split('_')[1]);
+  
+          switch (types) {
+            case 'w_king':
+    
+              
+    
+              break;
+            case 'b_king':
+    
+            
+    
+              break;
+            case 'w_queen':
+    
+              
+    
+              break;
+            case 'b_queen':
+              
+                
+      
+                break;
+            
+            case 'w_bishop':
+    
+              
+    
+              break;
+            
+            case 'b_bishop':
+    
+              
+              break;
+            case 'w_knight':
+    
+              
+    
+              break;
+            case 'b_knight':
+    
+              
+              break;
+            case 'w_rook':
+    
+              
+              
+              break;
+            case 'b_rook':
+            
+              
+              
+              break;
+            case 'w_pawn':
+    
+              
+              
+    
+              break;
+    
+            case 'b_pawn':
+    
+              
+    
+              break;
+    
+          }    
+
+
+        })
       },
   
       togglehighlight: function(options) {
@@ -917,9 +993,14 @@ let main = {
     
         } else if (main.methods.checkvalid(target) == true) { // else if selecedpiece.name is not white/black king than move
           
-          
+
           main.methods.move(target);
+          console.log("31")
+          main.methods.kingindanger(selectedpiece)
+          console.log("41")
           main.methods.endturn();
+
+
 
   
         }
@@ -929,6 +1010,9 @@ let main = {
         if (selectedpiece.id != target.id && main.variables.highlighted.indexOf(target.id) != (-1)) { // if it's not trying to capture pieces not in its movement range
           
           // capture
+          console.log("3")
+          main.methods.kingindanger(selectedpiece)
+          console.log("4")
           main.methods.capture(target)
           main.methods.endturn();
           
