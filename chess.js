@@ -249,6 +249,7 @@ let main = {
         let position = { x: '', y: '' };
         position.x = main.variables.pieces[selectedpiece].position.split('_')[0];
         position.y = main.variables.pieces[selectedpiece].position.split('_')[1];
+
   
         // these options need to be var instead of let
         var options = []; 
@@ -276,6 +277,7 @@ let main = {
             options = (main.methods.options(startpoint, coordinates, main.variables.pieces[selectedpiece].type)).slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+            return coordinates;
   
             break;
           case 'b_king':
@@ -297,6 +299,7 @@ let main = {
             options = (main.methods.options(startpoint, coordinates, main.variables.pieces[selectedpiece].type)).slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+            return coordinates;
   
             break;
           case 'w_queen':
@@ -315,6 +318,7 @@ let main = {
             options = coordinates.slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+            return coordinates;
   
             break;
           case 'b_queen':
@@ -333,6 +337,7 @@ let main = {
               options = coordinates.slice(0);
               main.variables.highlighted = options.slice(0);
               main.methods.togglehighlight(options);
+              return coordinates;
     
               break;
           
@@ -348,6 +353,7 @@ let main = {
             options = coordinates.slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+            return coordinates;
   
             break;
           
@@ -363,6 +369,7 @@ let main = {
             options = coordinates.slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+            return coordinates;
             break;
           case 'w_knight':
   
@@ -373,6 +380,8 @@ let main = {
             options = (main.methods.options(startpoint, coordinates, main.variables.pieces[selectedpiece].type)).slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+
+            return coordinates;
   
             break;
           case 'b_knight':
@@ -384,6 +393,7 @@ let main = {
             options = (main.methods.options(startpoint, coordinates, main.variables.pieces[selectedpiece].type)).slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+            return coordinates;
   
             break;
           case 'w_rook':
@@ -398,6 +408,7 @@ let main = {
             options = coordinates.slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+            return coordinates;
             
             break;
           case 'b_rook':
@@ -412,6 +423,7 @@ let main = {
             options = coordinates.slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+            return coordinates;
             
             break;
           case 'w_pawn':
@@ -434,6 +446,8 @@ let main = {
             options = (main.methods.options(startpoint, coordinates, main.variables.pieces[selectedpiece].type)).slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+            return coordinates;
+            
   
             break;
   
@@ -458,13 +472,17 @@ let main = {
             options = (main.methods.options(startpoint, coordinates, main.variables.pieces[selectedpiece].type)).slice(0);
             main.variables.highlighted = options.slice(0);
             main.methods.togglehighlight(options);
+            return coordinates;
   
             break;
   
         }
       },
   
-      options: function(startpoint, coordinates, piecetype) { // first check if any of the possible coordinates is out of bounds;
+      options: function(startpoint, coordinates, piecetype) {
+         // first check if any of the possible coordinates is out of bounds;
+
+
           
         coordinates = coordinates.filter(val => {
           let pos = { x: 0, y: 0 };
@@ -475,6 +493,12 @@ let main = {
             return val;
           }
         });
+
+        console.log(startpoint);
+        console.log("Here")
+        
+        
+        
   
         switch (piecetype) {
   
@@ -513,6 +537,10 @@ let main = {
               coordinates = coordinates.filter(val => {
                 let sp = { x: 0, y: 0 };
                 let coordinate = val.split('_');
+
+                
+                console.log(startpoint); // Check the value of startpoint
+
   
                 sp.x = startpoint.split('_')[0];
                 sp.y = startpoint.split('_')[1];
@@ -651,10 +679,45 @@ let main = {
       },
   
       move: function (target) {
-  
+
         let selectedpiece = $('#' + main.variables.selectedpiece).attr('chess');
-  
-        // new cell
+        let position = { x: '', y: '' };
+
+        position.x = main.variables.pieces[selectedpiece].position.split('_')[0];
+        position.y = main.variables.pieces[selectedpiece].position.split('_')[1];
+
+        console.log(selectedpiece)
+        pos=position.x + "_" + position.y
+        console.log(pos)
+
+        let type =main.variables.pieces[selectedpiece].type;
+        
+
+        var coords = main.methods.moveoptions(selectedpiece);
+
+        
+        console.log("this coord")
+        console.log(coords)
+
+        let cs = main.methods.options(pos,coords,type);
+
+        // Separate target coordinates (assuming target is a string in "X_Y" format)
+        let targetX, targetY;
+        [targetX, targetY] = target.id.split('_').map(Number); // Convert to numbers
+        console.log(targetX,targetY)
+        
+        // Find the matching coordinate in the array using find()
+        let matchingCoordinate = cs.find(coord => {
+          const [coordX, coordY] = coord.split('_').map(Number);
+          console.log(coordX,coordY);
+          return targetX === coordX && targetY === coordY;
+        });
+        
+        // Check if a matching coordinate is found
+        if (matchingCoordinate) {
+          // Target is a valid move based on the options function
+          console.log("Target is a valid move!");
+          // new cell
         $('#' + target.id).html(main.variables.pieces[selectedpiece].img);
         $('#' + target.id).attr('chess',selectedpiece);
         // old cell
@@ -662,15 +725,57 @@ let main = {
         $('#' + main.variables.selectedpiece).attr('chess','null');
         main.variables.pieces[selectedpiece].position = target.id;
         main.variables.pieces[selectedpiece].moved = true;
-  
-        /*
-        // toggle highlighted coordinates
-        main.methods.togglehighlight(main.variables.highlighted);
-        main.variables.highlighted.length = 0;
-        // set the selected piece to '' again
-        main.variables.selectedpiece = '';
-        */
-      },
+       
+        
+          // Perform actions for a valid move here (e.g., update board state, highlight target)
+        } else {
+          // Target is not a valid move
+          console.log("Target is not a valid move.");
+          
+          // Handle invalid move scenario here (e.g., display error message)
+        }
+
+
+         },
+
+         checkvalid : function(target)
+         {
+        let selectedpiece = $('#' + main.variables.selectedpiece).attr('chess');
+        let position = { x: '', y: '' };
+
+        position.x = main.variables.pieces[selectedpiece].position.split('_')[0];
+        position.y = main.variables.pieces[selectedpiece].position.split('_')[1];
+
+        console.log(selectedpiece)
+        pos=position.x + "_" + position.y
+
+
+        let type =main.variables.pieces[selectedpiece].type;
+
+        var coords = main.methods.moveoptions(selectedpiece);
+
+        let cs = main.methods.options(pos,coords,type);
+
+ 
+        let targetX, targetY;
+        [targetX, targetY] = target.id.split('_').map(Number); 
+
+        
+
+        let matchingCoordinate = cs.find(coord => {
+          const [coordX, coordY] = coord.split('_').map(Number);
+          console.log(coordX,coordY);
+          return targetX === coordX && targetY === coordY;
+        });
+        
+        if (matchingCoordinate) 
+        {
+        return true
+        } else 
+        {
+         return false
+        }
+         },
   
       endturn: function(){
   
@@ -805,15 +910,17 @@ let main = {
     
             main.methods.endturn();
             
-          } else { // move selectedpiece
+          } else if (main.methods.checkvalid(target) == true) { // move selectedpiece
             main.methods.move(target);
             main.methods.endturn();
           }
     
-        } else { // else if selecedpiece.name is not white/black king than move
-  
+        } else if (main.methods.checkvalid(target) == true) { // else if selecedpiece.name is not white/black king than move
+          
+          
           main.methods.move(target);
           main.methods.endturn();
+
   
         }
           
