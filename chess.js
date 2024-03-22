@@ -811,21 +811,27 @@ let main = {
   
       },
 
-      kingindanger: function(selectedpiece)
+      kingindanger: function()
       {
         console.log(main.variables.highlighted)
-        console.log(selectedpiece) 
-        let type  = $('#' + main.variables.selectedpiece.name).attr('chess');
-        console.log(type)       /*let filterking = main.variables.highlighted.filter(val => {
+         
+        let selectedpiece = $('#' + main.variables.selectedpiece).attr('chess');
+        let type = main.variables.pieces[selectedpiece].type;
+
+        
+        console.log(selectedpiece,type,main.variables.highlighted)       
+        let filterking = main.variables.highlighted.filter(val => {
           let pos = { x: 0, y: 0 };
           pos.x = parseInt(val.split('_')[0]);
           pos.y = parseInt(val.split('_')[1]);
+          console.log(pos.x,pos.y)
+          var bk = main.variables.pieces.b_king.position
   
-          switch (types) {
+          switch (type) {
             case 'w_king':
-    
-              
-    
+
+
+
               break;
             case 'b_king':
     
@@ -833,6 +839,10 @@ let main = {
     
               break;
             case 'w_queen':
+              if(bk == (pos.x+1)  + "_" + (pos.y) ||bk == (pos.x-1) + "_" + (pos.y) ||bk ==  +  (pos.x) + "_" + (pos.y+1) || bk ==  +  (pos.x) + "_" + (pos.y-1) )
+              {
+                console.log("Danger !")
+              }
     
               
     
@@ -888,7 +898,7 @@ let main = {
           }    
 
 
-        })*/
+        })
       },
   
       togglehighlight: function(options) {
@@ -993,11 +1003,10 @@ let main = {
     
         } else if (main.methods.checkvalid(target) == true) { // else if selecedpiece.name is not white/black king than move
           
-
+          console.log("11")
+          main.methods.kingindanger()
+          console.log("21")
           main.methods.move(target);
-          console.log("31")
-          main.methods.kingindanger(selectedpiece)
-          console.log("41")
           main.methods.endturn();
 
 
