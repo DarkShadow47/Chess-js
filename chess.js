@@ -818,14 +818,18 @@ let main = {
         let selectedpiece = $('#' + main.variables.selectedpiece).attr('chess');
         let type = main.variables.pieces[selectedpiece].type;
 
+        var bk = main.variables.pieces.b_king.position
+        console.log(bk)
+
         
         console.log(selectedpiece,type,main.variables.highlighted)       
         let filterking = main.variables.highlighted.filter(val => {
           let pos = { x: 0, y: 0 };
           pos.x = parseInt(val.split('_')[0]);
           pos.y = parseInt(val.split('_')[1]);
-          console.log(pos.x,pos.y)
-          var bk = main.variables.pieces.b_king.position
+          console.log(val)
+          
+          
   
           switch (type) {
             case 'w_king':
